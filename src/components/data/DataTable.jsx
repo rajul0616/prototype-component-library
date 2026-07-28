@@ -1,17 +1,17 @@
-// Generic sortable, paginated, resizable table. Props: columns[{ key, label, sortable, width, render(row) }], rows[], onRowClick, pageSize.
+// Generic sortable, paginated, resizable table. Props: columns[{ key, label, sortable, render(row) }], rows[], onRowClick, pageSize. Columns split the container evenly until the user drags a resize handle.
 import { useMemo, useRef, useState } from 'react'
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
 
-const DEFAULT_COL_WIDTH = 160
 const MIN_COL_WIDTH = 80
 
 export default function DataTable({ columns = [], rows = [], onRowClick, pageSize = 10 }) {
   const [sortKey, setSortKey] = useState(null)
   const [sortDir, setSortDir] = useState('asc')
   const [page, setPage] = useState(1)
-  const [colWidths, setColWidths] = useState(() =>
-    Object.fromEntries(columns.map((c) => [c.key, c.width ?? DEFAULT_COL_WIDTH])),
-  )
+  // Empty until the user drags a resize handle — until then columns split the container evenly with no horizontal scroll.
+  const [colWidths, setColWidths] = useState({})
+  const thRefs = useRef({})
+  const isCustomized = Object.keys(colWidths).length > 0
 
   const sortedRows = useMemo(() => {
     if (!sortKey) return rows
@@ -34,7 +34,9 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
     currentPage * pageSize,
   )
 
-  const tableWidth = columns.reduce((sum, col) => sum + (colWidths[col.key] ?? DEFAULT_COL_WIDTH), 0)
+  const tableWidth = isCustomized
+    ? columns.reduce((sum, col) => sum + (colWidths[col.key] ?? MIN_COL_WIDTH), 0)
+    : undefined
 
   function handleSort(col) {
     if (!col.sortable) return
@@ -50,7 +52,17 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
     e.preventDefault()
     e.stopPropagation()
     const startX = e.clientX
-    const startWidth = colWidths[key] ?? DEFAULT_COL_WIDTH
+
+    // First-ever resize: snapshot every column's current rendered width so switching
+    // to fixed pixel widths doesn't jump the other columns around.
+    let baseWidths = colWidths
+    if (!isCustomized) {
+      baseWidths = Object.fromEntries(
+        columns.map((c) => [c.key, thRefs.current[c.key]?.offsetWidth ?? MIN_COL_WIDTH]),
+      )
+      setColWidths(baseWidths)
+    }
+    const startWidth = baseWidths[key] ?? MIN_COL_WIDTH
 
     function onMouseMove(moveEvent) {
       const nextWidth = Math.max(MIN_COL_WIDTH, startWidth + (moveEvent.clientX - startX))
@@ -67,17 +79,25 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
       <div className="overflow-x-auto">
-        <table className="table-fixed text-left text-sm" style={{ width: tableWidth }}>
-          <colgroup>
-            {columns.map((col) => (
-              <col key={col.key} style={{ width: colWidths[col.key] ?? DEFAULT_COL_WIDTH }} />
-            ))}
-          </colgroup>
+        <table
+          className={`table-fixed text-left text-sm ${isCustomized ? '' : 'w-full'}`}
+          style={isCustomized ? { width: tableWidth } : undefined}
+        >
+          {isCustomized ? (
+            <colgroup>
+              {columns.map((col) => (
+                <col key={col.key} style={{ width: colWidths[col.key] }} />
+              ))}
+            </colgroup>
+          ) : null}
           <thead className="border-b border-gray-200 bg-violet-50/50">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
+                  ref={(el) => {
+                    thRefs.current[col.key] = el
+                  }}
                   onClick={() => handleSort(col)}
                   className={`relative px-4 py-2.5 font-medium text-gray-600 ${
                     col.sortable ? 'cursor-pointer select-none hover:text-violet-600' : ''

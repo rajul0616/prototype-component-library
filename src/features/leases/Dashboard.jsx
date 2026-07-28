@@ -6,7 +6,9 @@ import MetricCardRow from '../../components/dashboard/MetricCardRow.jsx'
 import DataTable from '../../components/data/DataTable.jsx'
 import EmptyState from '../../components/feedback/EmptyState.jsx'
 import RiskBadge from './RiskBadge.jsx'
+import CabinetApprovalTag from './CabinetApprovalTag.jsx'
 import { getRiskStatus, getRiskRank } from './riskStatus.js'
+import { mentionsCabinetApproval } from './cabinetFlag.js'
 import { formatCurrency, formatDate } from './formatters.js'
 
 const RISK_OPTIONS = ['Active', 'Expiring Soon', 'Expired']
@@ -27,7 +29,12 @@ const COLUMNS = [
     key: 'riskRank',
     label: 'Risk Status',
     sortable: true,
-    render: (row) => <RiskBadge status={row.riskLabel} />,
+    render: (row) => (
+      <div className="flex items-center gap-1.5">
+        <RiskBadge status={row.riskLabel} />
+        {row.hasCabinetFlag ? <CabinetApprovalTag /> : null}
+      </div>
+    ),
   },
   {
     key: 'leaseEndDate',
@@ -84,7 +91,12 @@ export default function Dashboard({ properties, onSelectProperty }) {
 
     const withRisk = filtered.map((p) => {
       const riskLabel = getRiskStatus(p.leaseEndDate)
-      return { ...p, riskLabel, riskRank: getRiskRank(riskLabel) }
+      return {
+        ...p,
+        riskLabel,
+        riskRank: getRiskRank(riskLabel),
+        hasCabinetFlag: mentionsCabinetApproval(p),
+      }
     })
 
     return riskFilter === 'all'

@@ -3,13 +3,16 @@ import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 
 import RiskBadge from './RiskBadge.jsx'
+import CabinetApprovalTag from './CabinetApprovalTag.jsx'
 import { getRiskStatus } from './riskStatus.js'
+import { mentionsCabinetApproval } from './cabinetFlag.js'
 import { formatCurrency, formatDate } from './formatters.js'
 
 export default function PropertyDetail({ property, currentUser, onBack, onAddActivity }) {
   const [note, setNote] = useState('')
 
   const riskStatus = getRiskStatus(property.leaseEndDate)
+  const hasCabinetFlag = mentionsCabinetApproval(property)
   const timeline = [...property.activityLog].sort(
     (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
   )
@@ -36,7 +39,10 @@ export default function PropertyDetail({ property, currentUser, onBack, onAddAct
             <h1 className="text-lg font-semibold text-gray-900">{property.address}</h1>
             <p className="text-sm text-gray-500">{property.city}</p>
           </div>
-          <RiskBadge status={riskStatus} />
+          <div className="flex items-center gap-1.5">
+            <RiskBadge status={riskStatus} />
+            {hasCabinetFlag ? <CabinetApprovalTag /> : null}
+          </div>
         </div>
 
         <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
