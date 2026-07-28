@@ -21,7 +21,7 @@ const COLUMNS = [
   { key: 'mainUse', label: 'Main Use', sortable: true },
   {
     key: 'monthlyRentalRate',
-    label: 'Monthly Rental Rate',
+    label: 'Monthly Rental Rate (VAT Excl.)',
     sortable: true,
     render: (row) => formatCurrency(row.monthlyRentalRate),
   },
@@ -135,7 +135,7 @@ export default function Dashboard({ properties, onSelectProperty }) {
       active: riskFilter === 'Expiring Soon',
     },
     {
-      label: 'Monthly Rental Exposure',
+      label: 'Monthly Rental Exposure (VAT Excl.)',
       value: formatCurrency(rows.reduce((sum, p) => sum + p.monthlyRentalRate, 0)),
       icon: DollarSign,
       description: 'Total monthly rent owed across the properties shown, excluding VAT.',
