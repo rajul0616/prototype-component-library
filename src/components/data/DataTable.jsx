@@ -78,19 +78,30 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                 </td>
               </tr>
             ) : (
-              pageRows.map((row, i) => (
-                <tr
-                  key={row.id ?? i}
-                  onClick={() => onRowClick?.(row)}
-                  className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
-                >
-                  {columns.map((col) => (
-                    <td key={col.key} className="px-4 py-2.5 text-gray-700">
-                      {row[col.key]}
-                    </td>
-                  ))}
-                </tr>
-              ))
+              <>
+                {pageRows.map((row, i) => (
+                  <tr
+                    key={row.id ?? i}
+                    onClick={() => onRowClick?.(row)}
+                    className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+                  >
+                    {columns.map((col) => (
+                      <td key={col.key} className="px-4 py-2.5 text-gray-700">
+                        {row[col.key]}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+                {Array.from({ length: pageSize - pageRows.length }).map((_, i) => (
+                  <tr key={`filler-${i}`} aria-hidden="true">
+                    {columns.map((col) => (
+                      <td key={col.key} className="px-4 py-2.5">
+                        &nbsp;
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </>
             )}
           </tbody>
         </table>
