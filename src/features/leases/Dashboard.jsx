@@ -104,24 +104,34 @@ export default function Dashboard({ properties, onSelectProperty }) {
       : withRisk.filter((p) => p.riskLabel === riskFilter)
   }, [properties, viewingAs, selectedLandlord, cityFilter, riskFilter])
 
+  function toggleRiskFilter(status) {
+    setRiskFilter((prev) => (prev === status ? 'all' : status))
+  }
+
   const metrics = [
     {
       label: 'Total Properties',
       value: rows.length,
       icon: Building2,
-      description: 'Number of properties currently matching your division, landlord, risk, and city filters.',
+      description: 'Number of properties currently matching your division, landlord, risk, and city filters. Click to clear the risk status filter.',
+      onClick: () => setRiskFilter('all'),
+      active: riskFilter === 'all',
     },
     {
       label: 'Expired',
       value: rows.filter((p) => p.riskLabel === 'Expired').length,
       icon: AlertTriangle,
-      description: "Properties whose lease end date has already passed as of today's date.",
+      description: "Properties whose lease end date has already passed as of today's date. Click to filter the table below.",
+      onClick: () => toggleRiskFilter('Expired'),
+      active: riskFilter === 'Expired',
     },
     {
       label: 'Expiring Soon',
       value: rows.filter((p) => p.riskLabel === 'Expiring Soon').length,
       icon: Clock,
-      description: 'Properties whose lease ends within the next 90 days and is not yet expired.',
+      description: 'Properties whose lease ends within the next 90 days and is not yet expired. Click to filter the table below.',
+      onClick: () => toggleRiskFilter('Expiring Soon'),
+      active: riskFilter === 'Expiring Soon',
     },
     {
       label: 'Monthly Rental Exposure',

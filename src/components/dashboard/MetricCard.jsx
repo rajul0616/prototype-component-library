@@ -1,9 +1,17 @@
-// Single stat card. Props: label, value, trend { value, direction: 'up'|'down' } (optional), icon (component, optional), description (optional, shown in a hover tooltip).
+// Single stat card. Props: label, value, trend { value, direction: 'up'|'down' } (optional), icon (component, optional), description (optional, shown in a hover tooltip), onClick + active (optional, makes the card a filter toggle).
 import { TrendingUp, TrendingDown, Info } from 'lucide-react'
 
-export default function MetricCard({ label, value, trend, icon: Icon, description }) {
+export default function MetricCard({ label, value, trend, icon: Icon, description, onClick, active }) {
+  const Wrapper = onClick ? 'button' : 'div'
+
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <Wrapper
+      type={onClick ? 'button' : undefined}
+      onClick={onClick}
+      className={`w-full rounded-2xl border p-4 text-left shadow-sm transition-colors ${
+        active ? 'border-violet-500 ring-2 ring-violet-100' : 'border-gray-200'
+      } bg-white ${onClick ? 'cursor-pointer hover:border-violet-300' : ''}`}
+    >
       <div className="flex items-start justify-between">
         <span className="flex items-center gap-1 text-sm font-medium text-gray-500">
           {label}
@@ -36,6 +44,6 @@ export default function MetricCard({ label, value, trend, icon: Icon, descriptio
           </span>
         ) : null}
       </div>
-    </div>
+    </Wrapper>
   )
 }

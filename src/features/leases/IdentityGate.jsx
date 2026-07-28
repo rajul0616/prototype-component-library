@@ -18,7 +18,7 @@ export default function IdentityGate({ divisions, onSubmit }) {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-violet-50 via-white to-white px-4">
-      <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-4 flex justify-center">
           <Building2 size={28} className="text-violet-600" />
         </div>
