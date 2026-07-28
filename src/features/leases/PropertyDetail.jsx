@@ -6,8 +6,7 @@ import RiskBadge from './RiskBadge.jsx'
 import { getRiskStatus } from './riskStatus.js'
 import { formatCurrency, formatDate } from './formatters.js'
 
-export default function PropertyDetail({ property, divisions, onBack, onAddActivity }) {
-  const [division, setDivision] = useState(property.ministryDivisionAgency)
+export default function PropertyDetail({ property, currentUser, onBack, onAddActivity }) {
   const [note, setNote] = useState('')
 
   const riskStatus = getRiskStatus(property.leaseEndDate)
@@ -18,7 +17,7 @@ export default function PropertyDetail({ property, divisions, onBack, onAddActiv
   function handleSubmit(e) {
     e.preventDefault()
     if (!note.trim()) return
-    onAddActivity(property.id, division, note.trim())
+    onAddActivity(property.id, note.trim())
     setNote('')
   }
 
@@ -61,7 +60,8 @@ export default function PropertyDetail({ property, divisions, onBack, onAddActiv
             <li key={i} className="relative">
               <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-violet-400" />
               <p className="text-xs font-medium text-gray-400">
-                {formatDate(entry.timestamp)} · {entry.loggedByDivision}
+                {formatDate(entry.timestamp)}
+                {entry.loggedByUser ? ` · ${entry.loggedByUser}` : ''} · {entry.loggedByDivision}
               </p>
               <p className="mt-0.5 text-sm text-gray-700">{entry.note}</p>
             </li>
@@ -69,20 +69,10 @@ export default function PropertyDetail({ property, divisions, onBack, onAddActiv
         </ol>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-3 border-t border-gray-100 pt-6">
-          <label className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-gray-600">Logged by division</span>
-            <select
-              value={division}
-              onChange={(e) => setDivision(e.target.value)}
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
-            >
-              {divisions.map((d) => (
-                <option key={d} value={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-          </label>
+          <p className="text-sm text-gray-500">
+            Logging as <span className="font-medium text-gray-700">{currentUser.name}</span> ·{' '}
+            {currentUser.division}
+          </p>
 
           <label className="flex flex-col gap-1 text-sm">
             <span className="font-medium text-gray-600">Note</span>

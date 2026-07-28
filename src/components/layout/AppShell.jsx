@@ -1,8 +1,8 @@
-// Page frame with header (logo slot + title), collapsible sidebar (navItems[]), and main content area. Props: logo, title, navItems[{ label, icon, href, onClick, active }], children.
+// Page frame with header (logo slot + title + optional right-side slot), collapsible sidebar (navItems[]), and main content area. Props: logo, title, navItems[{ label, icon, href, onClick, active }], headerRight, children.
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
-export default function AppShell({ logo, title, navItems = [], children }) {
+export default function AppShell({ logo, title, navItems = [], headerRight, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
@@ -43,6 +43,7 @@ export default function AppShell({ logo, title, navItems = [], children }) {
           {title ? (
             <h1 className="text-sm font-semibold text-gray-800">{title}</h1>
           ) : null}
+          {headerRight ? <div className="ml-auto flex items-center">{headerRight}</div> : null}
         </header>
 
         <main className="flex-1 overflow-auto p-6">{children}</main>
