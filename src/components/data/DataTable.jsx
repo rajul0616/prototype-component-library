@@ -1,4 +1,4 @@
-// Generic sortable, paginated table. Props: columns[{ key, label, sortable }], rows[], onRowClick, pageSize.
+// Generic sortable, paginated table. Props: columns[{ key, label, sortable, render(row) }], rows[], onRowClick, pageSize.
 import { useMemo, useState } from 'react'
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
 
@@ -87,7 +87,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                   >
                     {columns.map((col) => (
                       <td key={col.key} className="truncate px-4 py-2.5 text-gray-700">
-                        {row[col.key]}
+                        {col.render ? col.render(row) : row[col.key]}
                       </td>
                     ))}
                   </tr>
