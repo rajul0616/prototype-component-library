@@ -29,12 +29,13 @@ const COLUMNS = [
     key: 'riskRank',
     label: 'Risk Status',
     sortable: true,
-    render: (row) => (
-      <div className="flex items-center gap-1.5">
-        <RiskBadge status={row.riskLabel} />
-        {row.hasCabinetFlag ? <CabinetApprovalTag /> : null}
-      </div>
-    ),
+    render: (row) => <RiskBadge status={row.riskLabel} />,
+  },
+  {
+    key: 'hasCabinetFlag',
+    label: 'Flags',
+    sortable: true,
+    render: (row) => (row.hasCabinetFlag ? <CabinetApprovalTag /> : null),
   },
   {
     key: 'leaseEndDate',
@@ -150,7 +151,7 @@ export default function Dashboard({ properties, onSelectProperty }) {
           <select
             value={viewingAs}
             onChange={(e) => handleViewingAsChange(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
             <option value="all">All Properties</option>
             <optgroup label="By Division">
@@ -169,7 +170,7 @@ export default function Dashboard({ properties, onSelectProperty }) {
             <select
               value={selectedLandlord}
               onChange={(e) => setSelectedLandlord(e.target.value)}
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             >
               {landlords.map((l) => (
                 <option key={l} value={l}>
@@ -184,7 +185,7 @@ export default function Dashboard({ properties, onSelectProperty }) {
           <select
             value={riskFilter}
             onChange={(e) => setRiskFilter(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
             <option value="all">All</option>
             {RISK_OPTIONS.map((r) => (
@@ -199,7 +200,7 @@ export default function Dashboard({ properties, onSelectProperty }) {
           <select
             value={cityFilter}
             onChange={(e) => setCityFilter(e.target.value)}
-            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
           >
             <option value="all">All</option>
             {cities.map((c) => (

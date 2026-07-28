@@ -90,7 +90,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
               ))}
             </colgroup>
           ) : null}
-          <thead className="border-b border-gray-200 bg-violet-50/50">
+          <thead className="border-b border-gray-200 bg-blue-50/50">
             <tr>
               {columns.map((col) => (
                 <th
@@ -100,7 +100,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                   }}
                   onClick={() => handleSort(col)}
                   className={`relative px-4 py-2.5 font-medium text-gray-600 ${
-                    col.sortable ? 'cursor-pointer select-none hover:text-violet-600' : ''
+                    col.sortable ? 'cursor-pointer select-none hover:text-blue-700' : ''
                   }`}
                 >
                   <span className="inline-flex items-center gap-1">
@@ -120,7 +120,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                   <div
                     onMouseDown={(e) => startResize(e, col.key)}
                     onClick={(e) => e.stopPropagation()}
-                    className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize select-none hover:bg-violet-300"
+                    className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize select-none hover:bg-blue-300"
                   />
                 </th>
               ))}
@@ -139,7 +139,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                   <tr
                     key={row.id ?? i}
                     onClick={() => onRowClick?.(row)}
-                    className={onRowClick ? 'cursor-pointer hover:bg-violet-50/60' : ''}
+                    className={onRowClick ? 'cursor-pointer hover:bg-blue-50/60' : ''}
                   >
                     {columns.map((col) => (
                       <td key={col.key} className="px-4 py-2.5 text-gray-700">
@@ -171,14 +171,14 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="rounded-full border border-gray-200 px-3 py-1 hover:border-violet-300 hover:text-violet-600 disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
+            className="rounded-full border border-gray-200 px-3 py-1 hover:border-blue-300 hover:text-blue-700 disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
           >
             Prev
           </button>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="rounded-full border border-gray-200 px-3 py-1 hover:border-violet-300 hover:text-violet-600 disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
+            className="rounded-full border border-gray-200 px-3 py-1 hover:border-blue-300 hover:text-blue-700 disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
           >
             Next
           </button>

@@ -9,8 +9,8 @@ export default function MetricCard({ label, value, trend, icon: Icon, descriptio
       type={onClick ? 'button' : undefined}
       onClick={onClick}
       className={`w-full rounded-2xl border p-4 text-left shadow-sm transition-colors ${
-        active ? 'border-violet-500 ring-2 ring-violet-100' : 'border-gray-200'
-      } bg-white ${onClick ? 'cursor-pointer hover:border-violet-300' : ''}`}
+        active ? 'border-blue-600 ring-2 ring-blue-100' : 'border-gray-200'
+      } bg-white ${onClick ? 'cursor-pointer hover:border-blue-300' : ''}`}
     >
       <div className="flex items-start justify-between">
         <span className="flex items-center gap-1 text-sm font-medium text-gray-500">
@@ -24,7 +24,7 @@ export default function MetricCard({ label, value, trend, icon: Icon, descriptio
             </span>
           ) : null}
         </span>
-        {Icon ? <Icon size={18} className="text-violet-500" /> : null}
+        {Icon ? <Icon size={18} className="text-blue-600" /> : null}
       </div>
 
       <div className="mt-2 flex items-end justify-between">

@@ -60,7 +60,7 @@ export default function App() {
     <>
       <AppShell
         title="Property Lease Registry"
-        logo={<Building2 size={20} className="text-violet-600" />}
+        logo={<Building2 size={20} className="text-blue-700" />}
         navItems={[{ label: 'Properties', icon: Building2, active: true }]}
         headerRight={
           <div className="flex items-center gap-3 text-sm text-gray-500">
@@ -70,7 +70,7 @@ export default function App() {
             </span>
             <button
               onClick={() => setCurrentUser(null)}
-              className="flex items-center gap-1 rounded-full p-1.5 hover:bg-violet-50 hover:text-violet-600"
+              className="flex items-center gap-1 rounded-full p-1.5 hover:bg-blue-50 hover:text-blue-700"
               aria-label="Switch user"
             >
               <LogOut size={16} />

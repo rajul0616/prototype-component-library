@@ -28,22 +28,18 @@ export default function PropertyDetail({ property, currentUser, onBack, onAddAct
     <div className="space-y-6">
       <button
         onClick={onBack}
-        className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-violet-600"
+        className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-blue-700"
       >
         <ArrowLeft size={16} /> Back to dashboard
       </button>
 
       <div className="rounded-2xl border border-gray-200 bg-white p-6">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h1 className="text-lg font-semibold text-gray-900">{property.address}</h1>
-            <p className="text-sm text-gray-500">{property.city}</p>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <RiskBadge status={riskStatus} />
-            {hasCabinetFlag ? <CabinetApprovalTag /> : null}
-          </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <h1 className="text-lg font-semibold text-gray-900">{property.address}</h1>
+          <RiskBadge status={riskStatus} />
+          {hasCabinetFlag ? <CabinetApprovalTag /> : null}
         </div>
+        <p className="text-sm text-gray-500">{property.city}</p>
 
         <dl className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
           <Field label="Ministry / Division / Agency" value={property.ministryDivisionAgency} />
@@ -64,7 +60,7 @@ export default function PropertyDetail({ property, currentUser, onBack, onAddAct
         <ol className="space-y-4 border-l-2 border-gray-100 pl-4">
           {timeline.map((entry, i) => (
             <li key={i} className="relative">
-              <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-violet-400" />
+              <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-blue-400" />
               <p className="text-xs font-medium text-gray-400">
                 {formatDate(entry.timestamp)}
                 {entry.loggedByUser ? ` · ${entry.loggedByUser}` : ''} · {entry.loggedByDivision}
@@ -87,13 +83,13 @@ export default function PropertyDetail({ property, currentUser, onBack, onAddAct
               onChange={(e) => setNote(e.target.value)}
               rows={3}
               placeholder="Add a status update, renewal note, or risk flag…"
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </label>
 
           <button
             type="submit"
-            className="rounded-full bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700"
+            className="rounded-full bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800"
           >
             Add entry
           </button>

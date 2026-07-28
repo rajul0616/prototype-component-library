@@ -26,7 +26,7 @@ export default function LoginScreen({ onLogin, title = 'Sign in', logo, loading 
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-violet-50 via-white to-white px-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-blue-50 via-white to-white px-4">
       <div className="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         {logo ? <div className="mb-4 flex justify-center">{logo}</div> : null}
         <h1 className="mb-6 text-center text-lg font-semibold text-gray-900">{title}</h1>
@@ -38,7 +38,7 @@ export default function LoginScreen({ onLogin, title = 'Sign in', logo, loading 
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-violet-500 ${
+              className={`w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-600 ${
                 fieldErrors.email ? 'border-red-400' : 'border-gray-300'
               }`}
             />
@@ -53,7 +53,7 @@ export default function LoginScreen({ onLogin, title = 'Sign in', logo, loading 
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-violet-500 ${
+              className={`w-full rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-600 ${
                 fieldErrors.password ? 'border-red-400' : 'border-gray-300'
               }`}
             />
@@ -67,7 +67,7 @@ export default function LoginScreen({ onLogin, title = 'Sign in', logo, loading 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-full bg-violet-600 px-3 py-2 text-sm font-medium text-white hover:bg-violet-700 disabled:opacity-50"
+            className="w-full rounded-full bg-blue-700 px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 disabled:opacity-50"
           >
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
