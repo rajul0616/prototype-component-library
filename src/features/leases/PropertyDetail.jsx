@@ -14,7 +14,7 @@ export default function PropertyDetail({ property, currentUser, onBack, onAddAct
   const riskStatus = getRiskStatus(property.leaseEndDate)
   const hasCabinetFlag = mentionsCabinetApproval(property)
   const timeline = [...property.activityLog].sort(
-    (a, b) => new Date(a.timestamp) - new Date(b.timestamp),
+    (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
   )
 
   function handleSubmit(e) {
