@@ -1,10 +1,11 @@
 // Lease registry dashboard: portfolio metrics, "viewing as" division/landlord filter, risk/city filters, and the sortable property table.
 import { useMemo, useState } from 'react'
-import { Building2, AlertTriangle, Clock, DollarSign } from 'lucide-react'
+import { Building2, AlertTriangle, Clock, DollarSign, Plus, Trash2, Landmark } from 'lucide-react'
 
 import MetricCardRow from '../../components/dashboard/MetricCardRow.jsx'
 import DataTable from '../../components/data/DataTable.jsx'
 import EmptyState from '../../components/feedback/EmptyState.jsx'
+import ComingSoon from '../../components/feedback/ComingSoon.jsx'
 import RiskBadge from './RiskBadge.jsx'
 import CabinetApprovalTag from './CabinetApprovalTag.jsx'
 import { getRiskStatus, getRiskRank } from './riskStatus.js'
@@ -228,6 +229,14 @@ export default function Dashboard({ properties, onSelectProperty }) {
           onRowClick={(row) => onSelectProperty(row.id)}
         />
       )}
+
+      <ComingSoon
+        items={[
+          { icon: Plus, label: 'Adding new property' },
+          { icon: Trash2, label: 'Removing existing ones' },
+          { icon: Landmark, label: 'Cabinet approval workflow' },
+        ]}
+      />
     </div>
   )
 }
