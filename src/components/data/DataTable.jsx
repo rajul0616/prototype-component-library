@@ -41,7 +41,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
+        <table className="w-full table-fixed text-left text-sm">
           <thead className="border-b border-gray-200 bg-gray-50">
             <tr>
               {columns.map((col) => (
@@ -86,7 +86,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                     className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
                   >
                     {columns.map((col) => (
-                      <td key={col.key} className="px-4 py-2.5 text-gray-700">
+                      <td key={col.key} className="truncate px-4 py-2.5 text-gray-700">
                         {row[col.key]}
                       </td>
                     ))}
