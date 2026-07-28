@@ -39,17 +39,17 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
       <div className="overflow-x-auto">
         <table className="w-full table-fixed text-left text-sm">
-          <thead className="border-b border-gray-200 bg-gray-50">
+          <thead className="border-b border-gray-200 bg-violet-50/50">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
                   onClick={() => handleSort(col)}
                   className={`px-4 py-2.5 font-medium text-gray-600 ${
-                    col.sortable ? 'cursor-pointer select-none hover:text-gray-900' : ''
+                    col.sortable ? 'cursor-pointer select-none hover:text-violet-600' : ''
                   }`}
                 >
                   <span className="inline-flex items-center gap-1">
@@ -83,7 +83,7 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                   <tr
                     key={row.id ?? i}
                     onClick={() => onRowClick?.(row)}
-                    className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+                    className={onRowClick ? 'cursor-pointer hover:bg-violet-50/60' : ''}
                   >
                     {columns.map((col) => (
                       <td key={col.key} className="truncate px-4 py-2.5 text-gray-700">
@@ -115,14 +115,14 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="rounded-md border border-gray-200 px-2.5 py-1 disabled:opacity-40"
+            className="rounded-full border border-gray-200 px-3 py-1 hover:border-violet-300 hover:text-violet-600 disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
           >
             Prev
           </button>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="rounded-md border border-gray-200 px-2.5 py-1 disabled:opacity-40"
+            className="rounded-full border border-gray-200 px-3 py-1 hover:border-violet-300 hover:text-violet-600 disabled:opacity-40 disabled:hover:border-gray-200 disabled:hover:text-gray-500"
           >
             Next
           </button>

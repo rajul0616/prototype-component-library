@@ -5,7 +5,7 @@ import { CheckCircle2, XCircle, Info, X } from 'lucide-react'
 const VARIANTS = {
   success: { icon: CheckCircle2, classes: 'bg-emerald-50 text-emerald-800 border-emerald-200' },
   error: { icon: XCircle, classes: 'bg-red-50 text-red-800 border-red-200' },
-  info: { icon: Info, classes: 'bg-blue-50 text-blue-800 border-blue-200' },
+  info: { icon: Info, classes: 'bg-violet-50 text-violet-800 border-violet-200' },
 }
 
 export default function Toast({ message, variant = 'info', onClose, duration = 4000 }) {

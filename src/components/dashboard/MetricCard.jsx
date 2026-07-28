@@ -3,10 +3,10 @@ import { TrendingUp, TrendingDown } from 'lucide-react'
 
 export default function MetricCard({ label, value, trend, icon: Icon }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4">
+    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
       <div className="flex items-start justify-between">
         <span className="text-sm font-medium text-gray-500">{label}</span>
-        {Icon ? <Icon size={18} className="text-gray-400" /> : null}
+        {Icon ? <Icon size={18} className="text-violet-500" /> : null}
       </div>
 
       <div className="mt-2 flex items-end justify-between">

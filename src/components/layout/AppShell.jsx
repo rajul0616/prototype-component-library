@@ -6,7 +6,7 @@ export default function AppShell({ logo, title, navItems = [], children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
-    <div className="flex h-screen w-full bg-gray-50 text-gray-900">
+    <div className="flex h-screen w-full bg-gradient-to-b from-violet-50/60 via-white to-white text-gray-900">
       <aside
         className={`flex flex-col border-r border-gray-200 bg-white transition-all duration-200 ${
           sidebarOpen ? 'w-56' : 'w-0 overflow-hidden'
@@ -17,10 +17,10 @@ export default function AppShell({ logo, title, navItems = [], children }) {
             <button
               key={item.label ?? i}
               onClick={item.onClick}
-              className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+              className={`flex w-full items-center gap-2 rounded-full px-3 py-2 text-left text-sm font-medium transition-colors ${
                 item.active
-                  ? 'bg-gray-900 text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? 'bg-violet-600 text-white'
+                  : 'text-gray-600 hover:bg-violet-50'
               }`}
             >
               {item.icon ? <item.icon size={16} /> : null}
@@ -31,10 +31,10 @@ export default function AppShell({ logo, title, navItems = [], children }) {
       </aside>
 
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-14 items-center gap-3 border-b border-gray-200 bg-white px-4">
+        <header className="flex h-14 items-center gap-3 border-b border-gray-200 bg-white/80 px-4 backdrop-blur">
           <button
             onClick={() => setSidebarOpen((open) => !open)}
-            className="rounded-md p-1.5 text-gray-500 hover:bg-gray-100"
+            className="rounded-full p-1.5 text-gray-500 hover:bg-violet-50 hover:text-violet-600"
             aria-label="Toggle sidebar"
           >
             {sidebarOpen ? <X size={18} /> : <Menu size={18} />}

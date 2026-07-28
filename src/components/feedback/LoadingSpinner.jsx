@@ -3,9 +3,9 @@ import { Loader2 } from 'lucide-react'
 
 export default function LoadingSpinner({ size = 24, label }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 p-6 text-gray-400">
+    <div className="flex flex-col items-center justify-center gap-2 p-6 text-violet-400">
       <Loader2 size={size} className="animate-spin" />
-      {label ? <span className="text-sm">{label}</span> : null}
+      {label ? <span className="text-sm text-gray-400">{label}</span> : null}
     </div>
   )
 }

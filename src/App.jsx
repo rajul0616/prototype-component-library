@@ -93,7 +93,7 @@ export default function App() {
     <>
       <AppShell
         title="Component Library Demo"
-        logo={<div className="h-6 w-6 rounded bg-gray-900" />}
+        logo={<div className="h-6 w-6 rounded-full bg-violet-600" />}
         navItems={navItems}
       >
         {activeView === 'dashboard' ? (
@@ -104,7 +104,7 @@ export default function App() {
               <h2 className="text-sm font-semibold text-gray-700">Records</h2>
               <button
                 onClick={() => setModalRecord({ id: null, name: '', email: '', status: 'active', createdAt: '' })}
-                className="flex items-center gap-1.5 rounded-md bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800"
+                className="flex items-center gap-1.5 rounded-full bg-violet-600 px-3.5 py-1.5 text-sm font-medium text-white hover:bg-violet-700"
               >
                 <Plus size={14} /> Add record
               </button>

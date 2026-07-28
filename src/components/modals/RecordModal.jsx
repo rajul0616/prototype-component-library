@@ -38,7 +38,7 @@ export default function RecordModal({ isOpen, onClose, title = 'Edit record', fi
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md rounded-lg bg-white p-6"
+        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
@@ -63,13 +63,13 @@ export default function RecordModal({ isOpen, onClose, title = 'Edit record', fi
                   value={values[field.name] ?? ''}
                   onChange={(e) => setValue(field.name, e.target.value)}
                   rows={3}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-900"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-violet-500"
                 />
               ) : field.type === 'select' ? (
                 <select
                   value={values[field.name] ?? ''}
                   onChange={(e) => setValue(field.name, e.target.value)}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-900"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-violet-500"
                 >
                   {(field.options ?? []).map((opt) => (
                     <option key={opt} value={opt}>
@@ -89,7 +89,7 @@ export default function RecordModal({ isOpen, onClose, title = 'Edit record', fi
                   type={field.type ?? 'text'}
                   value={values[field.name] ?? ''}
                   onChange={(e) => setValue(field.name, e.target.value)}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-900"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-violet-500"
                 />
               )}
             </div>
@@ -99,13 +99,13 @@ export default function RecordModal({ isOpen, onClose, title = 'Edit record', fi
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-800"
+              className="rounded-full bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700"
             >
               Save
             </button>
