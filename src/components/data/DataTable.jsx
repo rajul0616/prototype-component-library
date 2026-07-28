@@ -1,7 +1,8 @@
-// Generic sortable, paginated, resizable table. Props: columns[{ key, label, sortable, render(row) }], rows[], onRowClick, pageSize. Columns split the container evenly until the user drags a resize handle.
+// Generic sortable, paginated, resizable table. Props: columns[{ key, label, sortable, width, render(row) }], rows[], onRowClick, pageSize. Columns split the container proportionally (by optional width hint) until the user drags a resize handle — no horizontal scroll appears until then.
 import { useMemo, useRef, useState } from 'react'
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
 
+const DEFAULT_COL_WIDTH = 140
 const MIN_COL_WIDTH = 80
 
 export default function DataTable({ columns = [], rows = [], onRowClick, pageSize = 10 }) {
@@ -83,13 +84,14 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
           className={`table-fixed text-left text-sm ${isCustomized ? '' : 'w-full'}`}
           style={isCustomized ? { width: tableWidth } : undefined}
         >
-          {isCustomized ? (
-            <colgroup>
-              {columns.map((col) => (
-                <col key={col.key} style={{ width: colWidths[col.key] }} />
-              ))}
-            </colgroup>
-          ) : null}
+          <colgroup>
+            {columns.map((col) => (
+              <col
+                key={col.key}
+                style={{ width: isCustomized ? colWidths[col.key] : (col.width ?? DEFAULT_COL_WIDTH) }}
+              />
+            ))}
+          </colgroup>
           <thead className="border-b border-gray-200 bg-blue-50/50">
             <tr>
               {columns.map((col) => (

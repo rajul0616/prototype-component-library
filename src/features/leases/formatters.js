@@ -14,3 +14,13 @@ export function formatDate(isoDate) {
     day: 'numeric',
   })
 }
+
+export function formatDateTime(isoDateTime) {
+  return new Date(isoDateTime).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}

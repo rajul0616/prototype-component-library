@@ -29,13 +29,13 @@ const COLUMNS = [
     key: 'riskRank',
     label: 'Risk Status',
     sortable: true,
-    render: (row) => <RiskBadge status={row.riskLabel} />,
-  },
-  {
-    key: 'hasCabinetFlag',
-    label: 'Flags',
-    sortable: true,
-    render: (row) => (row.hasCabinetFlag ? <CabinetApprovalTag /> : null),
+    width: 190,
+    render: (row) => (
+      <div className="flex flex-wrap items-center gap-1.5">
+        <RiskBadge status={row.riskLabel} />
+        {row.hasCabinetFlag ? <CabinetApprovalTag /> : null}
+      </div>
+    ),
   },
   {
     key: 'leaseEndDate',

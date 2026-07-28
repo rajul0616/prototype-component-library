@@ -7,7 +7,7 @@ import Toast from './components/feedback/Toast.jsx'
 import IdentityGate from './features/leases/IdentityGate.jsx'
 import Dashboard from './features/leases/Dashboard.jsx'
 import PropertyDetail from './features/leases/PropertyDetail.jsx'
-import { properties as seedProperties, MOCK_TODAY } from './data/properties.js'
+import { properties as seedProperties } from './data/properties.js'
 
 export default function App() {
   const [properties, setProperties] = useState(seedProperties)
@@ -39,7 +39,7 @@ export default function App() {
               activityLog: [
                 ...p.activityLog,
                 {
-                  timestamp: MOCK_TODAY,
+                  timestamp: new Date().toISOString(),
                   loggedByUser: currentUser.name,
                   loggedByDivision: currentUser.division,
                   note,

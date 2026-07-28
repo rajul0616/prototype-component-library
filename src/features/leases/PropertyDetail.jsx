@@ -6,7 +6,7 @@ import RiskBadge from './RiskBadge.jsx'
 import CabinetApprovalTag from './CabinetApprovalTag.jsx'
 import { getRiskStatus } from './riskStatus.js'
 import { mentionsCabinetApproval } from './cabinetFlag.js'
-import { formatCurrency, formatDate } from './formatters.js'
+import { formatCurrency, formatDate, formatDateTime } from './formatters.js'
 
 export default function PropertyDetail({ property, currentUser, onBack, onAddActivity }) {
   const [note, setNote] = useState('')
@@ -62,7 +62,7 @@ export default function PropertyDetail({ property, currentUser, onBack, onAddAct
             <li key={i} className="relative">
               <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-blue-400" />
               <p className="text-xs font-medium text-gray-400">
-                {formatDate(entry.timestamp)}
+                {entry.loggedByUser ? formatDateTime(entry.timestamp) : formatDate(entry.timestamp)}
                 {entry.loggedByUser ? ` · ${entry.loggedByUser}` : ''} · {entry.loggedByDivision}
               </p>
               <p className="mt-0.5 text-sm text-gray-700">{entry.note}</p>
