@@ -105,21 +105,29 @@ export default function Dashboard({ properties, onSelectProperty }) {
   }, [properties, viewingAs, selectedLandlord, cityFilter, riskFilter])
 
   const metrics = [
-    { label: 'Total Properties', value: rows.length, icon: Building2 },
+    {
+      label: 'Total Properties',
+      value: rows.length,
+      icon: Building2,
+      description: 'Number of properties currently matching your division, landlord, risk, and city filters.',
+    },
     {
       label: 'Expired',
       value: rows.filter((p) => p.riskLabel === 'Expired').length,
       icon: AlertTriangle,
+      description: "Properties whose lease end date has already passed as of today's date.",
     },
     {
       label: 'Expiring Soon',
       value: rows.filter((p) => p.riskLabel === 'Expiring Soon').length,
       icon: Clock,
+      description: 'Properties whose lease ends within the next 90 days and is not yet expired.',
     },
     {
       label: 'Monthly Rental Exposure',
       value: formatCurrency(rows.reduce((sum, p) => sum + p.monthlyRentalRate, 0)),
       icon: DollarSign,
+      description: 'Total monthly rent owed across the properties shown, excluding VAT.',
     },
   ]
 
