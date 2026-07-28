@@ -1,6 +1,6 @@
 // Lease registry dashboard: portfolio metrics, "viewing as" division/landlord filter, risk/city filters, and the sortable property table.
 import { useMemo, useState } from 'react'
-import { Building2, AlertTriangle, Clock, DollarSign, Plus, Trash2, Pencil } from 'lucide-react'
+import { Building2, AlertTriangle, Clock, DollarSign, Plus, Trash2, Pencil, UploadCloud } from 'lucide-react'
 
 import MetricCardRow from '../../components/dashboard/MetricCardRow.jsx'
 import DataTable from '../../components/data/DataTable.jsx'
@@ -235,6 +235,7 @@ export default function Dashboard({ properties, onSelectProperty }) {
           { icon: Plus, label: 'Add New Lease' },
           { icon: Trash2, label: 'Remove Lease' },
           { icon: Pencil, label: 'Update Lease' },
+          { icon: UploadCloud, label: 'Bulk Upload' },
         ]}
       />
     </div>
