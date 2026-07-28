@@ -1,11 +1,17 @@
-// Generic sortable, paginated table. Props: columns[{ key, label, sortable, render(row) }], rows[], onRowClick, pageSize.
-import { useMemo, useState } from 'react'
+// Generic sortable, paginated, resizable table. Props: columns[{ key, label, sortable, width, render(row) }], rows[], onRowClick, pageSize.
+import { useMemo, useRef, useState } from 'react'
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
+
+const DEFAULT_COL_WIDTH = 160
+const MIN_COL_WIDTH = 80
 
 export default function DataTable({ columns = [], rows = [], onRowClick, pageSize = 10 }) {
   const [sortKey, setSortKey] = useState(null)
   const [sortDir, setSortDir] = useState('asc')
   const [page, setPage] = useState(1)
+  const [colWidths, setColWidths] = useState(() =>
+    Object.fromEntries(columns.map((c) => [c.key, c.width ?? DEFAULT_COL_WIDTH])),
+  )
 
   const sortedRows = useMemo(() => {
     if (!sortKey) return rows
@@ -28,6 +34,8 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
     currentPage * pageSize,
   )
 
+  const tableWidth = columns.reduce((sum, col) => sum + (colWidths[col.key] ?? DEFAULT_COL_WIDTH), 0)
+
   function handleSort(col) {
     if (!col.sortable) return
     if (sortKey === col.key) {
@@ -38,17 +46,40 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
     }
   }
 
+  function startResize(e, key) {
+    e.preventDefault()
+    e.stopPropagation()
+    const startX = e.clientX
+    const startWidth = colWidths[key] ?? DEFAULT_COL_WIDTH
+
+    function onMouseMove(moveEvent) {
+      const nextWidth = Math.max(MIN_COL_WIDTH, startWidth + (moveEvent.clientX - startX))
+      setColWidths((prev) => ({ ...prev, [key]: nextWidth }))
+    }
+    function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove)
+      document.removeEventListener('mouseup', onMouseUp)
+    }
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+  }
+
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
       <div className="overflow-x-auto">
-        <table className="w-full table-fixed text-left text-sm">
+        <table className="table-fixed text-left text-sm" style={{ width: tableWidth }}>
+          <colgroup>
+            {columns.map((col) => (
+              <col key={col.key} style={{ width: colWidths[col.key] ?? DEFAULT_COL_WIDTH }} />
+            ))}
+          </colgroup>
           <thead className="border-b border-gray-200 bg-violet-50/50">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
                   onClick={() => handleSort(col)}
-                  className={`px-4 py-2.5 font-medium text-gray-600 ${
+                  className={`relative px-4 py-2.5 font-medium text-gray-600 ${
                     col.sortable ? 'cursor-pointer select-none hover:text-violet-600' : ''
                   }`}
                 >
@@ -66,6 +97,11 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                       )
                     ) : null}
                   </span>
+                  <div
+                    onMouseDown={(e) => startResize(e, col.key)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize select-none hover:bg-violet-300"
+                  />
                 </th>
               ))}
             </tr>
@@ -86,8 +122,8 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
                     className={onRowClick ? 'cursor-pointer hover:bg-violet-50/60' : ''}
                   >
                     {columns.map((col) => (
-                      <td key={col.key} className="truncate px-4 py-2.5 text-gray-700">
-                        {col.render ? col.render(row) : row[col.key]}
+                      <td key={col.key} className="px-4 py-2.5 text-gray-700">
+                        {col.render ? col.render(row) : <TruncatedText>{row[col.key]}</TruncatedText>}
                       </td>
                     ))}
                   </tr>
@@ -128,6 +164,36 @@ export default function DataTable({ columns = [], rows = [], onRowClick, pageSiz
           </button>
         </div>
       </div>
+    </div>
+  )
+}
+
+// Shows a tooltip with the full value, but only once the text actually overflows its cell.
+function TruncatedText({ children }) {
+  const ref = useRef(null)
+  const [isTruncated, setIsTruncated] = useState(false)
+  const [hovered, setHovered] = useState(false)
+
+  function handleMouseEnter() {
+    if (ref.current) setIsTruncated(ref.current.scrollWidth > ref.current.clientWidth)
+    setHovered(true)
+  }
+
+  return (
+    <div className="relative">
+      <span
+        ref={ref}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => setHovered(false)}
+        className="block truncate"
+      >
+        {children}
+      </span>
+      {hovered && isTruncated ? (
+        <div className="absolute left-0 top-full z-20 mt-1 max-w-xs whitespace-normal break-words rounded-md bg-gray-900 px-2 py-1 text-xs text-white shadow-lg">
+          {children}
+        </div>
+      ) : null}
     </div>
   )
 }
