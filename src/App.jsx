@@ -63,14 +63,14 @@ export default function App() {
         logo={<Building2 size={20} className="text-blue-700" />}
         navItems={[{ label: 'Properties', icon: Building2, active: true }]}
         headerRight={
-          <div className="flex items-center gap-3 text-sm text-gray-500">
-            <span>
-              <span className="font-medium text-gray-700">{currentUser.name}</span> ·{' '}
-              {currentUser.division}
+          <div className="flex min-w-0 items-center gap-2 text-sm text-gray-500 sm:gap-3">
+            <span className="min-w-0 truncate">
+              <span className="font-medium text-gray-700">{currentUser.name}</span>
+              <span className="hidden sm:inline"> · {currentUser.division}</span>
             </span>
             <button
               onClick={() => setCurrentUser(null)}
-              className="flex items-center gap-1 rounded-full p-1.5 hover:bg-blue-50 hover:text-blue-700"
+              className="shrink-0 flex items-center gap-1 rounded-full p-1.5 hover:bg-blue-50 hover:text-blue-700"
               aria-label="Switch user"
             >
               <LogOut size={16} />
@@ -90,7 +90,7 @@ export default function App() {
         )}
       </AppShell>
 
-      <div className="fixed bottom-4 right-4 z-50 flex w-80 flex-col gap-2">
+      <div className="fixed bottom-4 right-4 left-4 z-50 flex flex-col gap-2 sm:left-auto sm:w-80">
         {toasts.map((toast) => (
           <Toast
             key={toast.id}
