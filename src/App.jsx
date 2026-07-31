@@ -1,23 +1,20 @@
 // Government property lease registry MVP — wires the reusable component library to the Vantiqa case study data model.
 import { useMemo, useState } from 'react'
-import { Building2, History, LogOut } from 'lucide-react'
+import { Building2, LogOut } from 'lucide-react'
 
 import AppShell from './components/layout/AppShell.jsx'
 import Toast from './components/feedback/Toast.jsx'
 import IdentityGate from './features/leases/IdentityGate.jsx'
 import Dashboard from './features/leases/Dashboard.jsx'
 import PropertyDetail from './features/leases/PropertyDetail.jsx'
-import AccessLogView from './features/leases/AccessLogView.jsx'
 import { properties as seedProperties } from './data/properties.js'
-import { getAccessLog, recordLoginStart, resolveLoginLocation, clearAccessLog } from './features/leases/accessLog.js'
+import { recordLoginStart, resolveLoginLocation } from './features/leases/accessLog.js'
 
 export default function App() {
   const [properties, setProperties] = useState(seedProperties)
   const [selectedId, setSelectedId] = useState(null)
   const [toasts, setToasts] = useState([])
   const [currentUser, setCurrentUser] = useState(null)
-  const [section, setSection] = useState('properties')
-  const [accessLog, setAccessLog] = useState(() => getAccessLog())
 
   const divisions = useMemo(
     () => [...new Set(properties.map((p) => p.ministryDivisionAgency))].sort(),
@@ -36,9 +33,8 @@ export default function App() {
 
   function handleLogin(identity) {
     setCurrentUser(identity)
-    const { id, entries } = recordLoginStart(identity)
-    setAccessLog(entries)
-    resolveLoginLocation(id).then(setAccessLog)
+    const { id } = recordLoginStart(identity)
+    resolveLoginLocation(id)
   }
 
   function handleAddActivity(propertyId, note) {
@@ -72,23 +68,7 @@ export default function App() {
       <AppShell
         title="Property Lease Registry"
         logo={<Building2 size={20} className="text-blue-700" />}
-        navItems={[
-          {
-            label: 'Properties',
-            icon: Building2,
-            active: section === 'properties',
-            onClick: () => {
-              setSection('properties')
-              setSelectedId(null)
-            },
-          },
-          {
-            label: 'Access Log',
-            icon: History,
-            active: section === 'accessLog',
-            onClick: () => setSection('accessLog'),
-          },
-        ]}
+        navItems={[{ label: 'Properties', icon: Building2, active: true }]}
         headerRight={
           <div className="flex min-w-0 items-center gap-2 text-sm text-gray-500 sm:gap-3">
             <span className="min-w-0 truncate">
@@ -105,9 +85,7 @@ export default function App() {
           </div>
         }
       >
-        {section === 'accessLog' ? (
-          <AccessLogView entries={accessLog} onClear={() => setAccessLog(clearAccessLog())} />
-        ) : selectedProperty ? (
+        {selectedProperty ? (
           <PropertyDetail
             property={selectedProperty}
             currentUser={currentUser}
